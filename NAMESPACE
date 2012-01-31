@@ -1,0 +1,14 @@
+export(
+prepareDSList,
+dsRead,
+dsSearch,
+dsSort,
+getPath,
+getType,
+getFields,
+analyzeData,
+checkType,
+checkConsistency,
+readDSListFromXML,
+saveDSListAsXML)
+

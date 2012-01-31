@@ -1,0 +1,129 @@
+prepareDSList <- function(pathData, pathDescription)
+{
+    pathData <- path.expand(pathData)
+    pathDescription <- path.expand(pathDescription)
+    stopifnot(file.info(pathData)$isdir)
+    stopifnot(file.info(pathDescription)$isdir)
+    dsList <- readDSListFromXML(paste(pathDescription, "contents.xml", sep="/"))
+    return(data.frame(pathData, pathDescription, dsList))
+}
+
+dsSearch <- function(dsList, id, searchField=c("identification", "fullName", "dirName", "files"),
+            searchType=c("exact", "prefix", "suffix", "anywhere"), caseSensitive=FALSE)
+{
+    if (is.numeric(id)) {
+        stopifnot(all(id >= 1))
+        stopifnot(all(id <= nrow(dsList)))
+        stopifnot(all(id == floor(id)))
+        ind <- id
+        if (length(ind) == 0) {
+            cat("no data set found for", id, "\n")
+            return(NULL)
+        }
+        out <- data.frame(ind=ind, identification=dsList$identification[ind], stringsAsFactors=FALSE)
+    } else {
+        stopifnot(is.character(id))
+        stopifnot(length(id) == 1)
+        searchField <- match.arg(searchField)
+        searchType <- match.arg(searchType)
+        field <- dsList[[searchField]]
+        if (!caseSensitive) {
+            field <- tolower(field)
+            id <- tolower(id)
+        }
+        if (searchType == "exact") {
+            ind <- which(field == id)
+        } else if (searchType == "prefix") {
+            field <- substr(field, 1, nchar(id))
+            ind <- which(field == id)
+        } else if (searchType == "suffix") {
+            field <- substr(field, nchar(field) - nchar(id) + 1, nchar(field))
+            ind <- which(field == id)
+        } else {
+            ind <- grep(id, field, fixed=TRUE)
+        }
+        if (length(ind) == 0) {
+            cat("no data set found for", id, "\n")
+            return(NULL)
+        }
+        out <- data.frame(ind=ind, identification=dsList$identification[ind], stringsAsFactors=FALSE)
+        if (searchField == "fullName") {
+            out <- data.frame(out, fullName=dsList$fullName[ind])
+        } else if (searchField == "dirName") {
+            out <- data.frame(out, dirName=dsList$dirName[ind])
+        } else if (searchField == "files") {
+            out <- data.frame(out, dirName=dsList$files[ind])
+        }
+    }
+    out
+}
+
+getData <- function(x)
+{
+    stop("a dummy function, which should be masked by a sourced specific function")
+}
+
+dsRead <- function(dsList, id, responseName=NULL, originalNames=TRUE, deleteUnused=TRUE, keepContents=FALSE)
+{
+    if (class(id) == "character") {
+        ind <- which(dsList$identification == id)
+    } else if (is.numeric(id)) {
+        ind <- id
+    } else {
+        stop("identification of a database must be of character or numeric type")
+    }
+    if (length(ind) == 0) {
+        cat("no data set found for", id, "\n")
+        return(NULL)
+    }
+    if (length(ind) >= 2) {
+        cat("several data sets found for", id, "\n")
+        return(NULL)
+    }
+    id <- ind
+    identification <- dsList$identification[id]
+    functionsFile <- paste(dsList$pathDescription[id], "/functions.R", sep="")
+    if (file.access(functionsFile) == 0) {
+        source(functionsFile, local=TRUE)
+    }
+    source(paste(dsList$pathDescription[id], "/scripts/", identification, ".R", sep=""), local=TRUE)
+    dat <- getData(paste(dsList$pathData[id], dsList$dirName[id], sep="/"))
+    rm(getData)
+    row.names(dat) <- 1:nrow(dat)
+    if (ncol(dat) != dsList$originalColsNumber[id]) {
+        stop("inconsistent originalColsNumber")
+    }
+    if (nrow(dat) != dsList$cases[id]) {
+        stop("inconsistent number of cases")
+    }
+    out.cols <- seq.int(length.out=ncol(dat))
+    out.types <- split.comma(dsList$originalColsType[id])
+    if (originalNames && dsList$originalColsNames[id] != "") {
+        out.names <- split.comma(dsList$originalColsNames[id])
+    } else {
+        out.names <- paste("V", out.cols, sep="")
+    }
+    if (!is.null(responseName)) {
+        responsePos <- dsList$responsePos[id]
+        out.names[responsePos] <- responseName
+    }
+    names(dat) <- out.names
+    if (deleteUnused && !keepContents)
+    {
+        delete <- as.integer(split.comma(dsList$delete[id]))
+        if (length(delete) != 0) {
+            out.cols <- out.cols[ - delete]
+            out.types <- out.types[out.cols]
+            out.names <- out.names[out.cols]
+            dat <- dat[out.cols]
+        }
+    }
+    if (!keepContents) {
+        for (j in seq.int(length.out=ncol(dat))) {
+            if (out.types[j] != "n")
+                dat[,j] <- factor(dat[,j])
+        }
+    }
+    dat
+}
+

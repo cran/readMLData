@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<contents>
+ <dataset>
+  <identification>annealing</identification>
+  <fullName>Annealing</fullName>
+  <dirName>annealing</dirName>
+  <files>anneal.data,anneal.test</files>
+  <originalColsNumber>39</originalColsNumber>
+  <originalColsNames>family,product-type,steel,carbon,hardness,temper_rolling,condition,formability,strength,non-ageing,surface-finish,surface-quality,enamelability,bc,bf,bt,bw/me,bl,m,chrom,phos,cbond,marvi,exptl,ferro,corr,blue/bright/varn/clean,lustre,jurofm,s,p,shape,thick,width,len,oil,bore,packing,class</originalColsNames>
+  <originalColsType>10,3,9,n,n,2,4,6,n,2,3,5,6,2,2,2,3,2,2,2,2,2,2,2,2,2,5,2,2,2,2,2,n,n,n,3,4,4,5</originalColsType>
+  <responsePos>39</responsePos>
+  <cases>898</cases>
+ </dataset>
+ <dataset>
+  <identification>glass</identification>
+  <fullName>Glass Identification</fullName>
+  <dirName>glass</dirName>
+  <files>glass.data</files>
+  <originalColsNumber>11</originalColsNumber>
+  <originalColsNames>Id_number,RI,Na,Mg,Al,Si,K,Ca,Ba,Fe,Type_of_glass</originalColsNames>
+  <originalColsType>214,n,n,n,n,n,n,n,n,n,6</originalColsType>
+  <delete>1</delete>
+  <responsePos>11</responsePos>
+  <cases>214</cases>
+ </dataset>
+ <dataset>
+  <identification>wine</identification>
+  <fullName>Wine</fullName>
+  <dirName>wine</dirName>
+  <files>wine.data</files>
+  <originalColsNumber>14</originalColsNumber>
+  <originalColsType>3,n,n,n,n,n,n,n,n,n,n,n,n,n</originalColsType>
+  <responsePos>1</responsePos>
+  <cases>178</cases>
+ </dataset>
+</contents>
