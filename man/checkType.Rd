@@ -16,6 +16,9 @@ checkType(dsList, id)
 Errors are printed. The value is \code{TRUE} or \code{FALSE}
 according, whether the types are correct or not.
 }
+\seealso{
+\code{\link{readMLData}}.
+}
 \examples{
   pathData <- getPath("exampleData")
   pathDescription <- getPath("exampleDescription")

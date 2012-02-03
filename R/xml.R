@@ -13,7 +13,8 @@ fieldInfo <- rbind(
     c("attributesNumber",   "integer",   "computed"),
     c("attributesType",     "character", "computed"),
     c("responseType",       "character", "computed"),
-    c("cases",              "integer",   "obligatory"))
+    c("cases",              "integer",   "obligatory"),
+    c("available",          "logical",   "additional"))
 
 readDSListFromXML <- function(filename)
 {

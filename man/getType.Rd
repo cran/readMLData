@@ -16,6 +16,9 @@ getType(dat)
   columns, the number of different values for character or factor columns,
   and "o" otherwise.
 }
+\seealso{
+\code{\link{readMLData}}.
+}
 \examples{
   pathData <- getPath("exampleData")
   pathDescription <- getPath("exampleDescription")

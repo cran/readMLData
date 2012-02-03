@@ -15,12 +15,15 @@ getFields()
 Table containing the names, types and usage of the fields expected
 in \code{dsList}.
 }
-\author{ Petr Savicky }
+\seealso{
+\code{\link{readMLData}}.
+}
 \examples{
   pathData <- getPath("exampleData")
   pathDescription <- getPath("exampleDescription")
   dsList <- prepareDSList(pathData, pathDescription)
   getFields()
 }
+\author{ Petr Savicky }
 \keyword{ data }
 

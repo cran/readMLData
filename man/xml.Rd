@@ -24,6 +24,9 @@ saveDSListAsXML(dsList, filename)
   \code{readDSListFromXML()}
   returns a data frame with the description of the data sets.
 }
+\seealso{
+\code{\link{readMLData}}.
+}
 \author{ Petr Savicky }
 \keyword{ data }
 

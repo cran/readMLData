@@ -18,19 +18,28 @@ prepareDSList(pathData, pathDescription)
     description of the required data, in particular the file \code{"contents.xml"}.}
 }
 \details{
-  The list of fields, which should be included in \code{"contents.xml"},
-  consists of the fields with either \code{usage=="obligatory"} or
-  \code{usage=="optional"} in the table produced by \code{getFields()}.
-  Fields with \code{usage=="additional"} and \code{usage=="computed"}
-  are included automatically by the function \code{prepareDSList()}.
-
   The character "~" expands to your home directory.
+
+  The directory \code{pathData} need not contain all the data sets
+  included in \code{pathDescription/contents.xml}. The function
+  \code{checkAvailability()} is called and its output is stored
+  in column \code{availability} of the output data frame, which is
+  \code{logical} and specifies for each data set, whether it is or
+  is not present.
+
+  See \url{http://www.cs.cas.cz/~savicky/readMLData/} for description
+  files of some of the data sets from UCI Machine Learning Repository.
+  See the help page \code{\link{readMLData}} for more information
+  on the structure of the description files.
 }
 \value{
   Data frame with columns \code{pathData}, \code{pathDescription},
-  and some other as listed by \code{getFields()}. The output data frame
+  and other as listed by \code{getFields()}. The output data frame
   can be used as \code{dsList} parametr of functions \code{dsSearch()},
   \code{dsRead()}, \code{checkConsistency()}, \code{checkType()}.
+}
+\seealso{
+\code{\link{readMLData}}, \code{\link{checkAvailability}}, \code{\link{checkConsistency}}.
 }
 \examples{
   pathData <- getPath("exampleData")

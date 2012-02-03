@@ -17,6 +17,9 @@ checkConsistency(dsList, outputInd=FALSE)
   Depending on \code{outputInd}, either a vector of indices of data sets with
   a conflict between the specified parameters or NULL invisibly.
 }
+\seealso{
+\code{\link{readMLData}}.
+}
 \examples{
   pathData <- getPath("exampleData")
   pathDescription <- getPath("exampleDescription")

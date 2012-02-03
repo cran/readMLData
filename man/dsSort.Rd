@@ -19,7 +19,9 @@ dsSort(dat)
 \value{
    Data frame, whose rows are reordered by the sorting.
 }
-\author{ Petr Savicky }
+\seealso{
+\code{\link{readMLData}}.
+}
 \examples{
   pathData <- getPath("exampleData")
   pathDescription <- getPath("exampleDescription")
@@ -27,5 +29,6 @@ dsSort(dat)
   dat <- dsRead(dsList, "glass")
   sorted <- dsSort(dat)
 }
+\author{ Petr Savicky }
 \keyword{ data }
 

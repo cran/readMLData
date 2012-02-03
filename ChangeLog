@@ -1,15 +1,14 @@
+0.9-5 2012-02-03  - include URL field in DESCRIPTION
+                  - add functions checkAvailability() and dsDownload()
+                  - update of the documentation
 0.9-4 2012-01-31  - allow only one response column
                   - name of response column is a parameter
                   - response column is not moved to become the last column
                   - add function checkType()
-                  - update of the documentation
-0.9-3 2012-01-28  - put shortName before fullName in contents.xml
-                  - check types of columns in dsList data frame
-                  - simplify dsRead()
+                  - initial CRAN submission
+0.9-3 2012-01-28  - simplify dsRead()
                   - add example directories to "inst"
-                  - change <relation> to <dataset>
-0.9-2 2012-01-26  - the control structure is a single data frame dsList, not a list
-                    with a data frame component
+0.9-2 2012-01-26  - the control structure is a data frame, not a list with a data frame component
                   - include parameters searchField, searchType to dsSearch()
                   - search uses only string comparison or grep(, fixed=TRUE)
 0.9-1 2012-01-25  - change the names from db* to ds* (from data base to data set)

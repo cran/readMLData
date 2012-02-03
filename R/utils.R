@@ -26,6 +26,26 @@ getPath <- function(dirName)
     paste(library(help=readMLData)$path, dirName, sep="/")
 }
 
+getIndex <- function(dsList, id)
+{
+    if (class(id) == "character") {
+        ind <- which(dsList$identification == id)
+    } else if (is.numeric(id)) {
+        ind <- id
+    } else {
+        stop("identification of a database must be of character or numeric type")
+    }
+    if (length(ind) == 0) {
+        cat("no data set found for", id, "\n")
+        return(NULL)
+    }
+    if (length(ind) >= 2) {
+        cat("several data sets found for", id, "\n")
+        return(NULL)
+    }
+    ind
+}
+
 getType <- function(dat)
 {
     type <- rep(NA, times=ncol(dat))

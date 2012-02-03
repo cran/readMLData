@@ -36,12 +36,15 @@ dsSearch(dsList, id, searchField=c("identification", "fullName", "dirName", "fil
   Data frame containing the indices and identification of the matching data
   sets and the value of the search field, if applicable.
 }
-\author{ Petr Savicky }
+\seealso{
+\code{\link{readMLData}}.
+}
 \examples{
   pathData <- getPath("exampleData")
   pathDescription <- getPath("exampleDescription")
   dsList <- prepareDSList(pathData, pathDescription)
   dsSearch(dsList, "ident", searchField="fullName", searchType="anywhere")
 }
+\author{ Petr Savicky }
 \keyword{ data }
 

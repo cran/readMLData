@@ -16,6 +16,9 @@ analyzeData(dat)
   correspond to properties of columns of \code{dat}. The rows in the output
   data frame correspond to the columns of \code{dat}.
 }
+\seealso{
+\code{\link{readMLData}}.
+}
 \examples{
   pathData <- getPath("exampleData")
   pathDescription <- getPath("exampleDescription")

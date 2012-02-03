@@ -23,15 +23,19 @@ dsRead(dsList, id, responseName = NULL, originalNames=TRUE, deleteUnused=TRUE, k
     parameter is ignored and no columns are converted to factors.}
 }
 \details{
-	If no data set or more than one data set corresponding to \code{id} is found,
-    a corresponding error message is printed.
+  The function uses \code{dsList$avaiable} to determine, whether the files for
+  the required data set is present in the local directory \code{dsList$pathData}.
+  If not, a corresponding error message is printed. See \code{prepareDSList()}
+  and \code{checkAvailability()}.
 }
 \value{
-  NULL, if an error occurred. Otherwise a data frame containing the required
-  data set, possibly transformed according to the setting of the parameters
-  \code{responseName, originalNames, deleteUnused}.
+  A data frame containing the required data set, possibly transformed according
+  to the setting of the parameters \code{responseName, originalNames, deleteUnused}.
+  If an error occurred, the function outputs \code{NULL}.
 }
-\author{ Petr Savicky }
+\seealso{
+\code{\link{readMLData}}, \code{\link{prepareDSList}}, \code{\link{checkAvailability}}.
+}
 \examples{
   pathData <- getPath("exampleData")
   pathDescription <- getPath("exampleDescription")
@@ -39,5 +43,6 @@ dsRead(dsList, id, responseName = NULL, originalNames=TRUE, deleteUnused=TRUE, k
   dat <- dsRead(dsList, "glass")
   dim(dat)
 }
+\author{ Petr Savicky }
 \keyword{ data }
 

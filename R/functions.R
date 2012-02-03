@@ -5,7 +5,13 @@ prepareDSList <- function(pathData, pathDescription)
     stopifnot(file.info(pathData)$isdir)
     stopifnot(file.info(pathDescription)$isdir)
     dsList <- readDSListFromXML(paste(pathDescription, "contents.xml", sep="/"))
-    return(data.frame(pathData, pathDescription, dsList))
+    dsList <- data.frame(pathData, pathDescription, dsList)
+    dsList$available <- checkAvailability(dsList, seq.int(length.out=nrow(dsList)))
+    OK <- checkConsistency(dsList)
+    if (OK) {
+        cat(sum(dsList$available), "data sets available\n")
+    }
+    dsList
 }
 
 dsSearch <- function(dsList, id, searchField=c("identification", "fullName", "dirName", "files"),
@@ -65,22 +71,11 @@ getData <- function(x)
 
 dsRead <- function(dsList, id, responseName=NULL, originalNames=TRUE, deleteUnused=TRUE, keepContents=FALSE)
 {
-    if (class(id) == "character") {
-        ind <- which(dsList$identification == id)
-    } else if (is.numeric(id)) {
-        ind <- id
-    } else {
-        stop("identification of a database must be of character or numeric type")
-    }
-    if (length(ind) == 0) {
-        cat("no data set found for", id, "\n")
+    id <- getIndex(dsList, id)
+    if (!dsList$available[id]) {
+        cat("the required data set is not available\n")
         return(NULL)
     }
-    if (length(ind) >= 2) {
-        cat("several data sets found for", id, "\n")
-        return(NULL)
-    }
-    id <- ind
     identification <- dsList$identification[id]
     functionsFile <- paste(dsList$pathDescription[id], "/functions.R", sep="")
     if (file.access(functionsFile) == 0) {
@@ -125,5 +120,23 @@ dsRead <- function(dsList, id, responseName=NULL, originalNames=TRUE, deleteUnus
         }
     }
     dat
+}
+
+runCommand <- function(dsList, id, command, fileName)
+{
+    setwd(paste(dsList$pathData[id], dsList$dirName[id], sep="/"))
+    url <- readLines(fileName)
+    target <- basename(url)
+    for (i in which(file.access(target) == -1)) {
+        system(paste(command, url[i]))
+    }
+}
+
+dsDownload <- function(dsList, id, command, fileName)
+{
+    id <- getIndex(dsList, id)
+    current <- getwd()
+    out <- try( runCommand(dsList, id, command, fileName) )
+    setwd(current)
 }
 

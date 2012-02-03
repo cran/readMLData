@@ -1,3 +1,17 @@
+checkAvailability <- function(dsList, id)
+{
+    if (is.character(id)) {
+        id <- match(id, dsList$identification)
+    }
+    out <- rep(NA, times=length(id))
+    for (i in id) {
+        files <- split.comma(dsList$files[i])
+        files <- paste(dsList$pathData[i], dsList$dirName[i], files, sep="/")
+        out[i] <- all(file.access(files) == 0)
+    }
+    out
+}
+
 checkType <- function(dsList, id)
 {
     stopifnot(length(id) == 1)
@@ -34,8 +48,8 @@ checkType <- function(dsList, id)
             }
         }
     }
-    if (OK) {
-        cat("OK\n")
+    if (!OK) {
+        cat("Check of data types FAILED\n")
     }
     invisible(OK)
 }
@@ -63,7 +77,7 @@ checkConsistency <- function(dsList, outputInd=FALSE)
         if (any(obtained != fieldInfo[, 2])) {
             cat("incorrect class of columns\n")
             print(cbind(column=fieldInfo[, 1], expected=fieldInfo[, 2], obtained))
-        OK <- FALSE
+            OK <- FALSE
         }
     }
     ind <- c()
@@ -91,6 +105,7 @@ checkConsistency <- function(dsList, outputInd=FALSE)
             cat("delete                    :", delete, "\n")
             cat("responsePos               :", dsList$responsePos[i], "\n")
             cat("\n")
+            OK <- FALSE
         }
 
         if (!ok2)
@@ -98,6 +113,7 @@ checkConsistency <- function(dsList, outputInd=FALSE)
             cat("originalColsNumber        :", orig.num, "\n")
             cat("length(originalColsType)  :", calc.orig.type.num, "\n")
             cat("\n")
+            OK <- FALSE
         }
 
         if (!ok3)
@@ -105,14 +121,15 @@ checkConsistency <- function(dsList, outputInd=FALSE)
             cat("originalColsNumber        :", orig.num, "\n")
             cat("length(originalColsNames) :", calc.orig.names.num, "\n")
             cat("\n")
+            OK <- FALSE
         }
     }
-    if (OK) {
-        cat("OK\n")
+    if (!OK) {
+        cat("Check of dsList consistency FAILED\n")
     }
     if (outputInd)
         return(ind)
     else
-        return(invisible(NULL))
+        return(invisible(OK))
 }
 
