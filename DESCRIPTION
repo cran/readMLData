@@ -2,8 +2,8 @@ Package: readMLData
 Type: Package
 Title: Reading machine learning benchmark data sets from different
         sources in their original format.
-Version: 0.9-5
-Date: 2012-02-03
+Version: 0.9-6
+Date: 2012-02-08
 Author: Petr Savicky
 Maintainer: Petr Savicky <savicky@cs.cas.cz>
 Description: The data are not part of the package. The package requires
@@ -16,6 +16,6 @@ Description: The data are not part of the package. The package requires
 Depends: XML
 License: GPL
 URL: http://www.cs.cas.cz/~savicky/readMLData
-Packaged: 2012-02-03 08:39:57 UTC; savicky
+Packaged: 2012-02-08 10:03:15 UTC; savicky
 Repository: CRAN
-Date/Publication: 2012-02-03 09:34:40
+Date/Publication: 2012-02-08 12:00:23

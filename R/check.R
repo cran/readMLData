@@ -1,61 +1,69 @@
-checkAvailability <- function(dsList, id)
+checkType <- function(dsList, id, dat=NULL)
 {
-    if (is.character(id)) {
-        id <- match(id, dsList$identification)
-    }
-    out <- rep(NA, times=length(id))
-    for (i in id) {
-        files <- split.comma(dsList$files[i])
-        files <- paste(dsList$pathData[i], dsList$dirName[i], files, sep="/")
-        out[i] <- all(file.access(files) == 0)
-    }
-    out
-}
-
-checkType <- function(dsList, id)
-{
+    stopifnot(is.data.frame(dsList))
     stopifnot(length(id) == 1)
     if (is.character(id)) {
         ind <- which(dsList$identification == id)
         stopifnot(length(ind) == 1)
         id <- ind
     }
-    cat(dsList$identification[id], "\n")
-    dat <- dsRead(dsList, id, keepContents=TRUE)
-    expected <- split.comma(dsList$originalColsType[id])
+    cat(dsList$identification[id], ": Check of data types ")
+    if (is.null(dat)) {
+        dat <- dsRead(dsList, id, keepContents=TRUE)
+    }
     OK <- TRUE
-    for (i in seq.int(length.out=length(expected))) {
-        x <- dat[[i]]
-        x <- x[!is.na(x)]
-        if (is.double(x) && all(x == round(x)))
-            x <- as.integer(x)
-        col.class <- class(x)
-        stopifnot(length(col.class) == 1)
-        if (col.class == "numeric") {
-            if (expected[i] != "n") {
-                cat(i, expected[i], col.class, length(unique(x)), "\n")
-                OK <- FALSE
-            }
-        } else if (col.class == "integer") {
-            if (expected[i] != "n" && as.integer(expected[i]) < length(unique(x))) {
-                cat(i, expected[i], col.class, length(unique(x)), "\n")
-                OK <- FALSE
-            }
-        } else if (col.class == "character") {
-            if (expected[i] == "n" || as.integer(expected[i]) < length(unique(x))) {
-                cat(i, expected[i], col.class, length(unique(x)), "\n")
-                OK <- FALSE
+    expected <- split.comma(dsList$originalColsType[id])
+    obtainedClass <- rep("", times=ncol(dat))
+    lengthUnique <- rep(NA, times=ncol(dat))
+    columnOK <- rep(FALSE, times=ncol(dat))
+    if (length(expected) == ncol(dat)) {
+        for (i in seq.int(length.out=length(expected))) {
+            x <- dat[[i]]
+            x <- x[!is.na(x)]
+            if (is.double(x) && all(x == round(x)))
+                x <- as.integer(x)
+            x.class <- class(x)
+            stopifnot(length(x.class) == 1)
+            obtainedClass[i] <- x.class
+            lengthUnique[i] <- length(unique(x))
+            if (length(x) == 0) {
+                obtainedClass[i] <- "null"
+                columnOK[i] <- expected[i] == "1"
+            } else if (obtainedClass[i] == "numeric") {
+                columnOK[i] <- expected[i] == "n"
+            } else if (obtainedClass[i] == "integer") {
+                columnOK[i] <- expected[i] == "n" || as.integer(expected[i]) >= length(unique(x))
+            } else if (obtainedClass[i] == "character") {
+                columnOK[i] <- expected[i] != "n" && as.integer(expected[i]) >= length(unique(x))
             }
         }
+        if (any(!columnOK)) {
+            cat("\n")
+            cat("\n")
+            cat("The types of columns do not match.\n")
+            out <- data.frame(expected, obtainedClass, lengthUnique)
+            print(out[!columnOK, ])
+            OK <- FALSE
+        }
+    } else {
+        cat("\n")
+        cat("\n")
+        cat("The number of columns does not match.\n")
+        cat("stored = ", length(expected), ", obtained = ", ncol(dat), "\n", sep="")
+        OK <- FALSE
     }
-    if (!OK) {
+    if (OK) {
+        cat("OK\n")
+    } else {
         cat("Check of data types FAILED\n")
+        cat("\n")
     }
     invisible(OK)
 }
 
 checkConsistency <- function(dsList, outputInd=FALSE)
 {
+    stopifnot(is.data.frame(dsList))
     OK <- TRUE
     tab <- table(dsList$identification)
     if (any(tab > 1))

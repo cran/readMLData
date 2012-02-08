@@ -26,7 +26,7 @@ dsRead(dsList, id, responseName = NULL, originalNames=TRUE, deleteUnused=TRUE, k
   The function uses \code{dsList$avaiable} to determine, whether the files for
   the required data set is present in the local directory \code{dsList$pathData}.
   If not, a corresponding error message is printed. See \code{prepareDSList()}
-  and \code{checkAvailability()}.
+  and \code{getAvailable()}.
 }
 \value{
   A data frame containing the required data set, possibly transformed according
@@ -34,7 +34,7 @@ dsRead(dsList, id, responseName = NULL, originalNames=TRUE, deleteUnused=TRUE, k
   If an error occurred, the function outputs \code{NULL}.
 }
 \seealso{
-\code{\link{readMLData}}, \code{\link{prepareDSList}}, \code{\link{checkAvailability}}.
+\code{\link{readMLData}}, \code{\link{prepareDSList}}, \code{\link{getAvailable}}.
 }
 \examples{
   pathData <- getPath("exampleData")

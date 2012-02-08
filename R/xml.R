@@ -52,8 +52,8 @@ readDSListFromXML <- function(filename)
 
 saveDSListAsXML <- function(dsList, filename)
 {
+    stopifnot(is.data.frame(dsList))
     cnames <- names(dsList)
-
     datasets <- list()
     for (i in 1:nrow(dsList))
     {

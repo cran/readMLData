@@ -1,3 +1,6 @@
+0.9-6 2012-02-08  - dsRead() uses try( ... ) to read data
+                  - dsDownload() prints download comments of a data set, if there are any
+                  - update of checkType(), getAvailable()
 0.9-5 2012-02-03  - include URL field in DESCRIPTION
                   - add functions checkAvailability() and dsDownload()
                   - update of the documentation

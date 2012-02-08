@@ -37,11 +37,11 @@ getIndex <- function(dsList, id)
     }
     if (length(ind) == 0) {
         cat("no data set found for", id, "\n")
-        return(NULL)
+        return(invisible(NULL))
     }
     if (length(ind) >= 2) {
         cat("several data sets found for", id, "\n")
-        return(NULL)
+        return(invisible(NULL))
     }
     ind
 }

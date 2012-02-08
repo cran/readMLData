@@ -22,7 +22,7 @@ prepareDSList(pathData, pathDescription)
 
   The directory \code{pathData} need not contain all the data sets
   included in \code{pathDescription/contents.xml}. The function
-  \code{checkAvailability()} is called and its output is stored
+  \code{getAvailable()} is called and its output is stored
   in column \code{availability} of the output data frame, which is
   \code{logical} and specifies for each data set, whether it is or
   is not present.
@@ -39,7 +39,7 @@ prepareDSList(pathData, pathDescription)
   \code{dsRead()}, \code{checkConsistency()}, \code{checkType()}.
 }
 \seealso{
-\code{\link{readMLData}}, \code{\link{checkAvailability}}, \code{\link{checkConsistency}}.
+\code{\link{readMLData}}, \code{\link{getAvailable}}, \code{\link{checkConsistency}}.
 }
 \examples{
   pathData <- getPath("exampleData")
