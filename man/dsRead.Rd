@@ -7,7 +7,8 @@
   in the data frame \code{dsList} into R environment using a unified interface.
 }
 \usage{
-dsRead(dsList, id, responseName = NULL, originalNames=TRUE, deleteUnused=TRUE, keepContents=FALSE)
+dsRead(dsList, id, responseName = NULL, originalNames=TRUE,
+deleteUnused=TRUE, keepContents=FALSE)
 }
 \arguments{
 \item{dsList}{ Data frame as created by \code{prepareDSList()}.}

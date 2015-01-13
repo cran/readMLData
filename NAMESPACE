@@ -1,3 +1,5 @@
+importFrom(XML, xmlToDataFrame, xmlNode, xmlTextNode, saveXML)
+
 export(
 prepareDSList,
 dsRead,

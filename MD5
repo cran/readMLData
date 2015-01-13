@@ -1,6 +1,6 @@
-3a6b2ef2f5d5ced0167553ad901dc05f *ChangeLog
-c656f567f1b24eaf06010b7d255c853f *DESCRIPTION
-e8815e9dcb013d638b39f10265d0fd52 *NAMESPACE
+efb1979f56766bb09b32096130bd5cb4 *ChangeLog
+0f63b72ea0de7504badef2c14f0cdaaf *DESCRIPTION
+a85a7e9df4d183de0219581f349307c1 *NAMESPACE
 449b1c63afa4a280a86f7c5b74f20f43 *R/XML.R
 45a6b79ee6998e219ad73c6d0a647dcd *R/check.R
 0767213a11599c75600bae8219108df8 *R/functions.R
@@ -18,7 +18,7 @@ c8895a4dec3cedb58171294aa5073193 *inst/exampleDescription/scripts/glass.R
 76c2336d84de7c6ec56079a950ac0147 *man/checkConsistency.Rd
 d209e3bf0dee793d52a99b527111033c *man/checkType.Rd
 dc7ddbd34fda899543aec013b6a94d04 *man/dsDownload.Rd
-4a45412f9880cfb6313632fda6cc2c23 *man/dsRead.Rd
+ce55ffb2d675e7dbed5516d18e9901b7 *man/dsRead.Rd
 03338239377309478f67c31448125c68 *man/dsSearch.Rd
 a85069720dcf5d1f3844ad1cdf8db34c *man/dsSort.Rd
 9f39e2c6b825a8ce255c8ef735ecfa4c *man/getAvailable.Rd

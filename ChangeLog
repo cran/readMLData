@@ -1,3 +1,5 @@
+0.9-7 2015-01-13  - included importFrom() to NAMESPACE
+                  - reformulated description
 0.9-6 2012-02-08  - dsRead() uses try( ... ) to read data
                   - dsDownload() prints download comments of a data set, if there are any
                   - update of checkType(), getAvailable()
